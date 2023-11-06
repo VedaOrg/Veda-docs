@@ -42,7 +42,7 @@ This property requires a **33-byte** compressed public key. Multisig wallets are
 
 ### addressType (Nullable, default is p2wpkh)
 
-This attribute requires setting your address type. Currently, **`p2pkh`**, **`p2sh`**, and **`p2wpkh`** formats are supported. Default value is **`p2wpkh`**. **`p2tr`** is temporarily not supported. For the specific reasons, please refer to '[Wallet Address](address/wallet-address.md)'.
+This attribute requires setting your address type. Currently, **`p2pkh`**, **`p2sh`**, and **`p2wpkh`** formats are supported. Default value is **`p2wpkh`**. **`p2tr`** is temporarily not supported. For the specific reasons, please refer to [Wallet Address](address/wallet-address.md).
 
 ### action
 
@@ -72,7 +72,7 @@ Refer to [contractLocation](instruction.md#contractlocation-only-available-in-ex
 
 ### txHash
 
-The transaction hash is obtained using keccak-256 hash after encoding the raw transaction data according to the Ethereum standard RLP. For specific examples, refer to[ Generate transaction hash](../how-to-use-veda/deploy-a-contract.md#generate-transaction-hash). The order of the RLP array is as follows:
+The transaction hash is obtained using keccak-256 hash after encoding the raw transaction data according to the Ethereum standard RLP. For specific examples, refer to[Generate transaction hash](../how-to-use-veda/deploy-a-contract.md#generate-transaction-hash). The order of the RLP array is as follows:
 
 ```json
 [

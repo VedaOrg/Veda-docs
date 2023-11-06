@@ -162,7 +162,7 @@ const sig = await getSig()
 
 ### **Re-Constructing instruction**
 
-```
+```json
 {
     "p": "veda",
     "txHash": "YOUR TRANSACTION HASH HERE",

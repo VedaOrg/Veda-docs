@@ -80,7 +80,7 @@ const data = web3.eth.abi.encodeFunctionCall(getABIItemByName(abi, callParams.fu
 
 ### Generate transaction hash
 
-Refer to [here](deploy-a-contract.md#generate-transaction-hash)
+Refer to [Generate transaction hash](deploy-a-contract.md#generate-transaction-hash)
 
 ### Sign execution data
 
