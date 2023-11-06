@@ -1,4 +1,4 @@
-# Deploy a contract
+# Deploy a Contract
 
 ## Deploy from an exists bytecode
 

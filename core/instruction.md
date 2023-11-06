@@ -78,11 +78,11 @@ The transaction hash is obtained using keccak-256 hash after encoding the raw tr
 [
     "p",
     "publicKey",
-    "addressType", // If addressType is undefined, replace with ''
+    "addressType", // If addressType is undefined, replace with ""
     "action",
     "nonce",
     "data",
-    "sigType" // If sigType is undefined, replace with ''
+    "sigType" // If sigType is undefined, replace with ""
 ]
 ```
 
