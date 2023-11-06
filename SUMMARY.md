@@ -6,7 +6,7 @@
 
 ## How to use Veda
 
-* [Deploy a contract](how-to-use-veda/deploy-a-contract.md)
+* [Deploy a Contract](how-to-use-veda/deploy-a-contract.md)
 * [Contract Execution](how-to-use-veda/contract-execution.md)
 
 ## Core
