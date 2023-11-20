@@ -10,7 +10,7 @@ interface Instruction {
   action: 'execute' | 'deploy'
   nonce: number
   data: string
-  sigType?: 'compact' | 'der' | 'bip-322'
+  sigType?: 'ecdsa' | 'bip-322'
 }
 
 interface ExecuteInstruction extends Instruction {
@@ -20,7 +20,7 @@ interface DeployInstruction extends Instruction {
   bytecodeLocation: string
 }
 
-interface CompleteExecueInstruction extends ExecuteInstruction {
+interface CompleteExecuteInstruction extends ExecuteInstruction {
   txHash: string
   sig: string
 }
@@ -56,9 +56,11 @@ This attribute is essentially the same as the **`nonce`** attribute in Ethereum.
 
 This attribute requires the encoded data of constructor arguments or the complete encoded data of a function call. Apart from deployments where its data would be relatively less compared to Ethereum, the mechanism is entirely consistent with Ethereum.
 
-### sigType(Nullable, default is compact)
+### sigType(Nullable, default is ecdsa)
 
-This attribute requires the signature type. It supports **`compact`** (recommended, used by Unisat wallet), **`DER`** standard signature, and **`bip-322`** signature (used by Xverse wallet). The default value is **`compact`**.
+This attribute requires the signature type. It supports **`ecdsa`** (recommended, used by Xverse wallet), and **`bip-322`** signature (used by Unisat wallet). The default value is **`ecdsa`**.&#x20;
+
+It's **important** to note that the ECDSA signature is not signed in the standard ECDSA format, but rather in a format that complies with the [bitcoinjs-message](https://github.com/bitcoinjs/bitcoinjs-message) library's signature standard. This includes not only the **`RecoveryID`** in the V value, but also additional information about whether it's a **`compressed`** public key and the **`segwitType`** information.
 
 ### contractLocation (Only available in execution instruction)
 
