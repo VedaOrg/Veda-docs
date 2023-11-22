@@ -129,14 +129,14 @@ const txHash = keccak256(serializedData)
 
 ### **Sign deployment data**
 
-* Unisat (Recommend, SigType: compact)
+* Unisat (Recommend, SigType: bip-322)
 
 ```typescript
 const txHash: string // generated
-const sig = await window.unisat.signMessage(txHash)
+const sig = await window.unisat.signMessage(txHash, 'bip322-simple')
 ```
 
-* Xverse (SigType: bip-322)
+* Xverse (SigType: ecdsa)
 
 ```typescript
 const txHash: string // generated
@@ -148,7 +148,7 @@ const getSig = () => {
         network: {
           type: BitcoinNetworkType.Mainnet,
         },
-        address,
+        address, // Payment Address
         message: txHash,
       },
       onFinish: resolve,
