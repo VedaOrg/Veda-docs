@@ -60,8 +60,8 @@ const abi: string = "" // You should store abi on your app.(Just like other evm 
 const callParams = {
   func: 'mint',
   args: [
-    'TARGET ADDRESS HERE'
-    toWei(100, 'ether'),
+    'TARGET ADDRESS HERE',
+    toWei(100, 'ether')
   ],
 }
 const data = web3.eth.abi.encodeFunctionCall(getABIItemByName(abi, callParams.func), callParams.args)
