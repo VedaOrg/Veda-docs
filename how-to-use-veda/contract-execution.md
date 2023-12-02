@@ -61,7 +61,7 @@ const callParams = {
   func: 'mint',
   args: [
     'TARGET ADDRESS HERE',
-    toWei(100, 'ether')
+    toWei(100, 'ether'),
   ],
 }
 const data = web3.eth.abi.encodeFunctionCall(getABIItemByName(abi, callParams.func), callParams.args)
