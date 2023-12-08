@@ -60,7 +60,7 @@ const abi: string = "" // You should store abi on your app.(Just like other evm 
 const callParams = {
   func: 'mint',
   args: [
-    'TARGET ADDRESS HERE'
+    'TARGET ADDRESS HERE',
     toWei(100, 'ether'),
   ],
 }
