@@ -67,12 +67,63 @@ const callParams = {
 const data = web3.eth.abi.encodeFunctionCall(getABIItemByName(abi, callParams.func), callParams.args)
 ```
 
+### Generate Contract Address
+
+<pre class="language-typescript"><code class="lang-typescript">import * as bitcoin from 'bitcoinjs-lib'
+<strong>import { keccak256 } from 'web3-utils'
+</strong>import RLP from 'rlp'
+
+const publicKeyToAddress = (publicKeyHex: string, networkType: 'mainnet' | 'testnet' = 'mainnet') => {
+  const publicKeyBuffer = Buffer.from(publicKeyHex, 'hex')
+  const network = networkType === 'mainnet' ? bitcoin.networks.bitcoin : bitcoin.networks.testnet
+
+  // p2tr
+  const toXOnly = (pubKey: Buffer) => (pubKey.length === 32 ? pubKey : pubKey.subarray(1, 33))
+  const tapInternalKey = toXOnly(publicKeyBuffer)
+
+  return {
+    p2tr: bitcoin.payments.p2tr({ internalPubkey: tapInternalKey, network }).address!,
+    p2pkh: bitcoin.payments.p2pkh({ pubkey: publicKeyBuffer, network }).address!,
+    p2sh: bitcoin.payments.p2sh({
+      redeem: bitcoin.payments.p2wpkh({ pubkey: publicKeyBuffer, network }),
+    }).address!,
+    p2wpkh: bitcoin.payments.p2wpkh({ pubkey: publicKeyBuffer, network }).address!,
+  }
+}
+const toHexAddress = (address: string) => {
+  const hash = keccak256(address)
+
+  return '0x' + hash.slice(26)
+}
+const generateContractAddress = (walletAddress: string, nonce: number) => {
+  const input = RLP.encode([walletAddress, nonce])
+  const hash = keccak256(input)
+
+  return '0x' + hash.slice(26)
+}
+
+// Example
+const sampleInstruction: DeploySerialInstruction = {
+  p: 'veda',
+  publicKey: 'YOUR PUBLIC KEY HERE',
+  addressType: 'p2wpkh',
+  action: 'deploy',
+  bytecodeLocation: 'BYTECODE ORDINALS ID HERE'
+  nonce: 0,
+  data: 'DATA HERE',
+}
+const ownerAddress = toHexAddress(
+  publicKeyToAddress(sampleInstruction.publicKey)[sampleInstruction.addressType as 'p2pkh' | 'p2wpkh' | 'p2sh' | 'p2tr'],
+)
+const contractAddress = generateContractAddress(ownerAddress, sampleInstruction.nonce)
+</code></pre>
+
 ```json
 {
     "p": "veda",
     "publicKey": "YOUR PUBLICKEY HERE",
     "action": "execute",
-    "contractLocation": "CONTRACT DEPLOY ID HERE",
+    "contract": "CONTRACT ADDRESS",
     "nonce": 0, // Wallet tx count
     "data": "YOUR FUNCTIONCALL DATA HERE"
 }

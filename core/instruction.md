@@ -6,11 +6,11 @@
 interface Instruction {
   p: 'veda'
   publicKey: string
-  addressType?: 'p2pkh' | 'p2sh' | 'p2wpkh'
+  addressType: 'p2pkh' | 'p2sh' | 'p2wpkh' | 'p2tr'
   action: 'execute' | 'deploy'
   nonce: number
   data: string
-  sigType?: 'ecdsa' | 'bip-322'
+  sigType: 'ecdsa' | 'bip-322'
 }
 
 interface ExecuteInstruction extends Instruction {
@@ -40,9 +40,9 @@ This property is used for protocol matching. When the value of the **`p`** attri
 
 This property requires a **33-byte** compressed public key. Multisig wallets are not supported at the moment.
 
-### addressType (Nullable, default is p2wpkh)
+### addressType
 
-This attribute requires setting your address type. Currently, **`p2pkh`**, **`p2sh`**, and **`p2wpkh`** formats are supported. Default value is **`p2wpkh`**. **`p2tr`** is temporarily not supported. For the specific reasons, please refer to '[Wallet Address](address/wallet-address.md)'.
+This attribute requires setting your address type. Currently, **`p2pkh`**, **`p2sh`**, **`p2tr`** and **`p2wpkh`** formats are supported.&#x20;
 
 ### action
 
@@ -56,19 +56,19 @@ This attribute is essentially the same as the **`nonce`** attribute in Ethereum.
 
 This attribute requires the encoded data of constructor arguments or the complete encoded data of a function call. Apart from deployments where its data would be relatively less compared to Ethereum, the mechanism is entirely consistent with Ethereum.
 
-### sigType(Nullable, default is ecdsa)
+### sigType
 
-This attribute requires the signature type. It supports **`ecdsa`** (recommended, used by Xverse wallet), and **`bip-322`** signature (used by Unisat wallet). The default value is **`ecdsa`**.&#x20;
+This attribute requires the signature type. It supports **`ecdsa`** (recommended, used by Xverse wallet), and **`bip-322`** signature (used by Unisat wallet).&#x20;
 
 It's **important** to note that the ECDSA signature is not signed in the standard ECDSA format, but rather in a format that complies with the [bitcoinjs-message](https://github.com/bitcoinjs/bitcoinjs-message) library's signature standard. This includes not only the **`RecoveryID`** in the V value, but also additional information about whether it's a **`compressed`** public key and the **`segwitType`** information.
 
-### contractLocation (Only available in execution instruction)
+### contract (Only available in execution instruction)
 
-This attribute requires the **ordinals id** of the contract, distinct from the **`bytecodeLocation`** attribute. The contract's ordinals id is the id of the contract deployment instruction on ordinals, while **`bytecodeLocation`** requires the id where the bytecode is inscribed on ordinals. For instance, if I inscribed the bytecode of an erc20 contract and suppose its inscription transaction hash is `abc` with an offset of 0, then its id would be `abci0`, **where the character 'i' acts as a delimiter between the transaction hash and the offset**. Next, to deploy the contract by invoking its constructor, I need to inscribe a deployment command. The **`bytecodeLocation`** attribute in this command would take the above-mentioned `abci0`. After the deployment command is inscribed, it results in a transaction hash, let's assume it's `edf` with an offset again being 0. Therefore, the id of the deployment command would be `edfi0`. Finally, to invoke a method in the contract, the **`contractLocation`** in the execution command should be `edfi0` and not `abci0`. You can view the content in `abci0` as the definition of a class, while `edfi0` is akin to instantiating the contract class through the constructor to deploy the contract.
+Calculate the contract's hex address based on the deployment instruction. Refer to [Generate Contract Address](address/contract-address.md#example)
 
 ### bytecodeLocation (Only available in deployment instruction)
 
-Refer to [contractLocation](instruction.md#contractlocation-only-available-in-execution-instruction)
+This attribute requires the ordinals ID of the bytecode. For example, if I inscribed the bytecode of an ERC20 contract, and suppose the transaction hash of the inscription is abc with an offset of 0, then its ID would be **`abci0`**. Here, the character 'i' acts as a delimiter between the transaction hash and the offset. Next, to deploy the contract by invoking its constructor, I need to inscribe a deployment command. The **`bytecodeLocation`** attribute in this command will use the aforementioned **`abci0`**.
 
 ## CompleteInstruction Properties
 

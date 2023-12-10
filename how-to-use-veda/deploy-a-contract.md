@@ -85,41 +85,53 @@ The deployment method of Veda differs from that of ETH. Since ETH cannot persist
 ### Generate transaction hash
 
 ```typescript
-import { rlp, intToBuffer } from 'ethereumjs-util'
+import RLP from 'rlp'
 import { keccak256 } from 'web3-utils'
 
-interface DeployInstruction {
-  p: 'veda'
-  publicKey: string
-  addressType?: 'p2pkh' | 'p2sh' | 'p2wpkh'
-  action: 'execute' | 'deploy'
-  bytecodeLocation: string
-  nonce: number
-  data: string
-  sigType?: 'compact' | 'der' | 'bip-322'
+interface Instruction {
+  p?: string
+  publicKey?: string
+  txHash?: string
+  addressType?: 'p2pkh' | 'p2sh' | 'p2wpkh' | 'p2tr'
+  action?: 'execute' | 'deploy'
+  contract?: string
+  bytecodeLocation?: string
+  nonce?: number
+  data?: string
+  sigType?: 'ecdsa' | 'bip-322'
+  sig?: string
 }
 
-const serializeInstruction = (instruction: DeployInstruction) => {
+interface DeploySerialInstruction extends Required<Omit<Instruction, 'txHash' | 'action' | 'contract' | 'sig'>> {
+  action: 'deploy'
+}
+interface ExecuteSerialInstruction extends Required<Omit<Instruction, 'txHash' | 'action' | 'bytecodeLocation' | 'sig'>> {
+  action: 'execute'
+}
+
+const serializeInstruction = (instruction: ExecuteSerialInstruction | DeploySerialInstruction) => {
   const instructionAsArray = [
     instruction.p,
     instruction.publicKey,
-    instruction.addressType || '',
+    instruction.addressType,
     instruction.action,
-    ethUtil.intToBuffer(instruction.nonce),
+    instruction.action === 'deploy' ? instruction.bytecodeLocation : instruction.contract,
+    instruction.nonce,
     instruction.data,
-    instruction.sigType || ''
+    instruction.sigType,
   ]
-  
-  return ethUtil.rlp.encode(instructionAsArray)
+  return RLP.encode(instructionAsArray)
 }
 
-const sampleInstruction: DeployInstruction = {
+// Example
+const sampleInstruction: DeploySerialInstruction = {
   p: 'veda',
-  publicKey: 'yourPublicKey',
+  publicKey: 'YOUR PUBLIC KEY HERE',
+  addressType: 'p2wpkh',
   action: 'deploy',
-  bytecodeLocation: 'bytecodeId'
+  bytecodeLocation: 'BYTECODE ORDINALS ID HERE'
   nonce: 0,
-  data: 'yourData',
+  data: 'DATA HERE',
 }
 
 const serializedData = serializeInstruction(sampleInstruction)
@@ -162,11 +174,12 @@ const sig = await getSig()
 
 ### **Re-Constructing instruction**
 
-```
+```json
 {
     "p": "veda",
     "txHash": "YOUR TRANSACTION HASH HERE",
     "publicKey": "YOUR PUBLICKEY HERE",
+    "addressType": "p2wpkh",
     "action": "deploy",
     "bytecodeLocation": "EXAMPLE BYTECODE INSCRIPTION ID",
     "nonce": 0, // Wallet tx count
