@@ -18,9 +18,17 @@
 
 ## BVM
 
+### Guides
+* [Quick Start](bvm/quick-start.md)
+
+### Concepts
 * [Changes Relative to EVM](bvm/changes-relative-to-evm.md)
 * [Changes in Solidity](bvm/changes-in-solidity.md)
 * [Readonly API Service](bvm/readonly-api-service.md)
+
+### APIs
+* [Internal API](bvm/internal-api.md)
+* [VEDA RPC API](bvm/veda-rpc-api.md)
 
 ## Resources
 
