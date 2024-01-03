@@ -1,6 +1,6 @@
 # Quick Start
 
-## Installation
+## Deployment
 
 This guide teaches how to use deploy a BVM node. We suggest you to use Docker rather than baremental way. All instructions are based on Ubuntu.
 
@@ -15,6 +15,45 @@ docker-compose up -d
 ```
 
 The docker will automatically pull or buid the image and run it.
+
+### Baremental
+Install python 3.9 or later is required, and simply install the package:
+
+```bash
+python3 setup.py install
+```
+
+after that, you can run the veda-bvm by:
+
+```bash
+veda --veda-root-dir=/tmp/evmdata --data-dir=/tmp/evmdata --enable-http-apis=eth,veda
+```
+
+You will see the output on the console like the following:
+
+```bash
+
+    INFO  2024-01-03 14:00:58,123                  Veda  
+      _   __       __    
+     | | / /__ ___/ /__ _
+     | |/ / -_) _  / _ `/
+     |___/\__/\_,_/\_,_/ 
+                         
+    
+    INFO  2024-01-03 14:00:58,124                  Veda  Started main process (pid=51382)
+    INFO  2024-01-03 14:00:58,124                  Veda  Veda DEBUG log file is created at /private/tmp/evmdata/logs-veda1/veda.log
+    INFO  2024-01-03 14:00:58,131           IPCListener  Starting <veda._utils.logging.IPCListener object at 0x111c2c0a0> server over IPC socket: /private/tmp/evmdata/ipcs-veda1/logging.ipc
+    INFO  2024-01-03 14:00:59,486                  veda  Started DB server process (pid=51384)
+    INFO  2024-01-03 14:01:01,045             DBManager  Starting <veda.db.manager.DBManager object at 0x10bcb9e20> server over IPC socket: /private/tmp/evmdata/ipcs-veda1/db.ipc
+    INFO  2024-01-03 14:01:01,096      ComponentManager  Starting components: Sync HTTP Service/JSON-RPC API
+    INFO  2024-01-03 14:01:01,096      ComponentManager  Components started
+    INFO  2024-01-03 14:01:02,458          JSON-RPC API  JSON-RPC modules exposed via HTTP: ('eth', 'veda')
+    INFO  2024-01-03 14:01:02,460             IPCServer  IPC started at: /private/tmp/evmdata/ipcs-veda1/jsonrpc.ipc
+    INFO  2024-01-03 14:01:02,460            HTTPServer  Running HTTP Server(JSONRPC) 0.0.0.0:8545
+    INFO  2024-01-03 14:01:02,460     Sync HTTP Service  Internal RPC Server exposed via HTTP: 127.0.0.1:8679
+    INFO  2024-01-03 14:01:02,461             IPCServer  IPC started at: /private/tmp/evmdata/ipcs-veda1/internal.ipc
+    INFO  2024-01-03 14:01:02,461            HTTPServer  Running HTTP Server(Syncer) 127.0.0.1:8679
+```
 
 ### Executable arguments
 
@@ -116,6 +155,13 @@ print('veda_block_number', veda_block_number)
 print(internal_rpc_simple(veda_block_number))
 ```
 
+You can find the logs located in `${ROOT_DIR}/logs_veda1/`, you can find the logs like this.
+
+```bash
+   DEBUG  2024-01-03 14:08:57,310     InternalRPCServer  Syncing block 822268
+   DEBUG  2024-01-03 14:08:57,329     InternalRPCServer  Block #822268-0x0000..001f contains 1 transactions, 1 succeeded, veda blockHash: 0x000000000000000000000000000000000000000000000000000000000000001f
+   DEBUG  2024-01-03 14:08:57,331           rpc_handler  Receiving POST request: /
+```
 
 
 ### Veda RPC
