@@ -26,11 +26,14 @@
 * [Changes in Solidity](bvm/changes-in-solidity.md)
 * [Readonly API Service](bvm/readonly-api-service.md)
 
+## ERDE
+
+* [What is Erde?](erde/what-is-erde.md)
+* [What will Erde bring?](erde/what-will-erde-bring.md)
+* [Technical architecture](erde/technical-architecture.md)
+
 ***
 
-* [ERDE](erde/README.md)
-  * [What will Erde bring?](erde/what-will-erde-bring.md)
-  * [Technical architecture](erde/technical-architecture.md)
 * [Roadmap](roadmap.md)
 
 ## Resources
