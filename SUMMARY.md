@@ -26,11 +26,11 @@
 * [Changes in Solidity](bvm/changes-in-solidity.md)
 * [Readonly API Service](bvm/readonly-api-service.md)
 
-## ERDE
+## ERDE - The second part of Veda
 
-* [What is Erde?](erde/what-is-erde.md)
-* [What will Erde bring?](erde/what-will-erde-bring.md)
-* [Technical architecture](erde/technical-architecture.md)
+* [What is Erde?](erde-the-second-part-of-veda/what-is-erde.md)
+* [What will Erde bring?](erde-the-second-part-of-veda/what-will-erde-bring.md)
+* [Technical architecture](erde-the-second-part-of-veda/technical-architecture.md)
 
 ***
 
