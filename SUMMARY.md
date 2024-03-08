@@ -17,12 +17,21 @@
   * [Contract Address](core/address/contract-address.md)
 
 ## BVM Guides
+
 * [Quick Start](bvm/quick-start.md)
 
 ## BVM Concepts
+
 * [Changes Relative to EVM](bvm/changes-relative-to-evm.md)
 * [Changes in Solidity](bvm/changes-in-solidity.md)
 * [Readonly API Service](bvm/readonly-api-service.md)
+
+***
+
+* [ERDE](erde/README.md)
+  * [What will Erde bring?](erde/what-will-erde-bring.md)
+  * [Technical architecture](erde/technical-architecture.md)
+* [Roadmap](roadmap.md)
 
 ## Resources
 
